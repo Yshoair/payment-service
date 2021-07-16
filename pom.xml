@@ -12,9 +12,12 @@
     <artifactId>payment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>payment-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description>A service which consumes online and offline payments from Kafka topics validates and persists them in
+        db.
+    </description>
     <properties>
         <java.version>11</java.version>
+        <dependencies.dir>${project.basedir}/src/main/resources/dependencies</dependencies.dir>
     </properties>
     <dependencies>
         <dependency>
@@ -80,6 +83,24 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.dkanejs.maven.plugins</groupId>
+                <artifactId>docker-compose-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <id>up</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>up</goal>
+                        </goals>
+                        <configuration>
+                            <composeFile>${dependencies.dir}/docker-compose/docker-compose.yml</composeFile>
+                            <detachedMode>true</detachedMode>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
