@@ -1,4 +1,4 @@
 package com.wefox.payment.repository.contract;
 
-public interface PaymentRepository {
+public interface IPaymentRepository {
 }

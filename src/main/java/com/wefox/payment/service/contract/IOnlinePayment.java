@@ -1,4 +1,4 @@
 package com.wefox.payment.service.contract;
 
-public interface OnlinePayment {
+public interface IOnlinePayment {
 }
