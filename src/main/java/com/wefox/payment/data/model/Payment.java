@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class IPayment implements IPaymentData {
+public class Payment implements IPaymentData {
 
   private @JsonProperty("payment_id") String paymentId;
   private @JsonProperty("account_id") int accountId;

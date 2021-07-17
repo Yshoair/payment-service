@@ -1,6 +1,6 @@
 package com.wefox.payment.infrastructure.kafka.config;
 
-import com.wefox.payment.data.model.IPayment;
+import com.wefox.payment.data.model.Payment;
 import com.wefox.payment.infrastructure.config.ConfigurationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,19 +10,19 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 
 @EnableKafka
 @Configuration
-public class KafkaOfflinePaymentConsumerConfig extends KafkaConsumerConfig<IPayment> {
+public class KafkaOfflinePaymentConsumerConfig extends KafkaConsumerConfig<Payment> {
 
   @Autowired
   public KafkaOfflinePaymentConsumerConfig(ConfigurationManager configManager) {
     super(
         configManager.getKafkaOfflinePaymentGroupId(),
         configManager.getKafkaServer(),
-        IPayment.class);
+        Payment.class);
   }
 
   @Override
   @Bean("OfflinePaymentContainerFactory")
-  public ConcurrentKafkaListenerContainerFactory<String, IPayment> kafkaListenerContainerFactory() {
+  public ConcurrentKafkaListenerContainerFactory<String, Payment> kafkaListenerContainerFactory() {
     return super.kafkaListenerContainerFactory();
   }
 }
