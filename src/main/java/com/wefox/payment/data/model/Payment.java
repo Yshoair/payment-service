@@ -42,6 +42,7 @@ public class Payment implements IPaymentData, IKafkaModel<Payment> {
       ObjectMapper paymentMapper = new ObjectMapper();
       return paymentMapper.readValue(json, this.getClass());
     } catch (JsonProcessingException e) {
+      //TODO Add Exception for invalid data and send the error to the logger
       e.printStackTrace();
     }
     return null;
