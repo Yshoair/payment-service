@@ -1,4 +1,7 @@
 package com.wefox.payment.service.contract;
 
-public interface IOnlinePayment {
+import com.wefox.payment.data.contract.IPaymentData;
+
+public interface IOnlinePayment extends IPayment {
+    void validate(IPaymentData paymentData);
 }
