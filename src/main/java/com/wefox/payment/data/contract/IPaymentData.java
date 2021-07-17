@@ -14,7 +14,7 @@ public interface IPaymentData {
 
   int getAmount();
 
-  Date getCreatedAt();
+  Date getCreatedOn();
 
   void setPaymentId(String paymentId);
 
@@ -26,7 +26,7 @@ public interface IPaymentData {
 
   void setAmount(int amount);
 
-  void setCreatedAt(Date createdAt);
+  void setCreatedOn(Date createdOn);
 
-  IPaymentData mapFrom(IPaymentData IPaymentData);
+  IPaymentData mapFrom(IPaymentData paymentData);
 }

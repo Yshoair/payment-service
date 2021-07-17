@@ -19,7 +19,8 @@ class PaymentTest {
             496,
             "online",
             "4847171163467501036",
-            23);
+            23,
+            null);
     assertEquals(payment, new Payment().parse(paymentJson));
   }
 }

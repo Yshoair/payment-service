@@ -22,18 +22,10 @@ public class Payment implements IPaymentData, IKafkaModel<Payment> {
   private @JsonProperty("payment_type") String paymentType;
   private @JsonProperty("credit_card") String creditCard;
   private @JsonProperty("amount") int amount;
-  private Date createdAt;
-
-  public Payment(String paymentId, int accountId, String paymentType, String creditCard, int amount) {
-    this.paymentId = paymentId;
-    this.accountId = accountId;
-    this.paymentType = paymentType;
-    this.creditCard = creditCard;
-    this.amount = amount;
-  }
+  private Date createdOn;
 
   @Override
-  public IPaymentData mapFrom(IPaymentData IPaymentData) {
+  public IPaymentData mapFrom(IPaymentData paymentData) {
     return null;
   }
 
