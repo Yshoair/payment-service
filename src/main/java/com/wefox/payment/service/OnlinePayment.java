@@ -18,8 +18,8 @@ public class OnlinePayment implements IOnlinePayment {
     }
 
     @Override
-    public void storePayment(IPaymentData paymentData) {
-
+    public IPaymentData storePayment(IPaymentData paymentData) {
+        return null;
     }
 
     @Override

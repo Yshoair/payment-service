@@ -44,32 +44,18 @@ class OfflinePaymentTest {
 
   @Test
   void offlinePaymentStoredCorrectly_Test() {
-    //region Actual
-    IPaymentData paymentModel = new com.wefox.payment.data.model.Payment(
-                    "382b8005-da4e-4004-b064-5d920d47e14b",
-                    496,
-                    "online",
-                    "4847171163467501036",
-                    23,
-                    null);
-    offlinePayment.storePayment(paymentModel);
-    Payment persistedPaymentData = paymentRepository.findById("382b8005-da4e-4004-b064-5d920d47e14b").
+    IPaymentData payment = new Payment(
+            "382b8005-da4e-4004-b064-5d920d47e14b",
+            new Account(496),
+            "online",
+            "4847171163467501036",
+            23,
+            null,
+            0);
+    payment = offlinePayment.storePayment(payment);
+    IPaymentData persistedPaymentData = paymentRepository.findById("382b8005-da4e-4004-b064-5d920d47e14b").
             orElse(new Payment());
-    //endregion
-
-    //region Expected
-    IPaymentData expectedPaymentEntity = new Payment(
-                    "382b8005-da4e-4004-b064-5d920d47e14b",
-                    new Account(496),
-                    "online",
-                    "4847171163467501036",
-                    23,
-                    null,
-                    0);
-    expectedPaymentEntity.setCreatedOn(persistedPaymentData.getCreatedOn());
-    //endregion
-
-    assertEquals(expectedPaymentEntity, persistedPaymentData);
+    assertEquals(payment, persistedPaymentData);
   }
 
   @Test
