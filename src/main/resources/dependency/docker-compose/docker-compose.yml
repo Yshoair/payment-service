@@ -16,22 +16,23 @@ services:
   kafka-server:
     image: 'bitnami/kafka:latest'
     networks:
-      - kafka-net    
+      - kafka-net
     ports:
       - '9092:9092'
+      - '9093:9093'
       - '29092:29092'
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server:9092,PLAINTEXT_HOST://localhost:29092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONNECTIONS_FROM_LOCALHOST:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CONNECTIONS_FROM_LOCALHOST://:9093,PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CONNECTIONS_FROM_LOCALHOST://localhost:9093,PLAINTEXT://kafka-server:9092,PLAINTEXT_HOST://localhost:29092
     depends_on:
       - zookeeper-server
   postgress:
     image: postgres
-    ports: 
-      -  '5432:5432'
+    ports:
+      - '5432:5432'
     volumes:
       - ./Database/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./Database/accounts.sql:/docker-entrypoint-initdb.d/2-accounts.sql
@@ -50,7 +51,7 @@ services:
       - kafka-net
     volumes:
       - ./ApiAndProducer/bin:/app/
-    command: ["./wait-for-it.sh", "postgress:5432","kafka-server:9092","-t","100", "--", "java", "-jar", "app.jar"]
+    command: [ "./wait-for-it.sh", "postgress:5432","kafka-server:9092","-t","100", "--", "java", "-jar", "app.jar" ]
     depends_on:
       - postgress
       - kafka-server
