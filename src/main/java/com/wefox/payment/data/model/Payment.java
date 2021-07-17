@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Payment implements IPaymentData, IKafkaModel<Payment> {
 
