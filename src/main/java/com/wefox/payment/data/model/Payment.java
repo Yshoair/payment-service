@@ -1,6 +1,9 @@
 package com.wefox.payment.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wefox.payment.data.contract.IKafkaModel;
 import com.wefox.payment.data.contract.IPaymentData;
 import lombok.AllArgsConstructor;
@@ -10,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Payment implements IPaymentData, IKafkaModel<Payment> {
 
   private @JsonProperty("payment_id") String paymentId;
@@ -34,6 +38,12 @@ public class Payment implements IPaymentData, IKafkaModel<Payment> {
 
   @Override
   public Payment parse(String json) {
+    try {
+      ObjectMapper paymentMapper = new ObjectMapper();
+      return paymentMapper.readValue(json, this.getClass());
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
     return null;
   }
 }
