@@ -1,7 +1,7 @@
 package com.wefox.payment.data.entity;
 
+import com.wefox.payment.data.contract.IAccountData;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Getter @Setter @RequiredArgsConstructor @ToString
 @Entity
-public @Table(name = "accounts") class Account {
+public @Table(name = "accounts") class Account implements IAccountData {
 
   @Id @Column(name = "account_id")
   private int accountId;
@@ -37,10 +37,21 @@ public @Table(name = "accounts") class Account {
   public Account(int accountId) { this.accountId = accountId; }
 
   @Override
+  public IAccountData mapFrom(IAccountData accountData) {
+    return null;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
     Account account = (Account) o;
-    return Objects.equals(accountId, account.accountId);
+    return accountId == account.accountId
+        && Objects.equals(name, account.name)
+        && Objects.equals(email, account.email)
+        && Objects.equals(birthDate, account.birthDate)
+        && Objects.equals(lastPaymentDate, account.lastPaymentDate)
+        && Objects.equals(createdOn, account.createdOn)
+        && Objects.equals(payments, account.payments);
   }
 }

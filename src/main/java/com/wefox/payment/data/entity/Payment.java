@@ -2,7 +2,6 @@ package com.wefox.payment.data.entity;
 
 import com.wefox.payment.data.contract.IPaymentData;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -40,6 +39,7 @@ public @Table(name = "payments") class Payment implements IPaymentData {
     paymentId = paymentData.getPaymentId();
     account = new Account(paymentData.getAccountId());
     paymentType = paymentData.getPaymentType();
+    creditCard = paymentData.getCreditCard();
     amount = paymentData.getAmount();
     return this;
   }
@@ -47,8 +47,14 @@ public @Table(name = "payments") class Payment implements IPaymentData {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
     Payment payment = (Payment) o;
-    return Objects.equals(paymentId, payment.paymentId);
+    return amount == payment.amount
+        && accountId == payment.accountId
+        && Objects.equals(paymentId, payment.paymentId)
+        && Objects.equals(account, payment.account)
+        && Objects.equals(paymentType, payment.paymentType)
+        && Objects.equals(creditCard, payment.creditCard)
+        && Objects.equals(createdOn, payment.createdOn);
   }
 }
