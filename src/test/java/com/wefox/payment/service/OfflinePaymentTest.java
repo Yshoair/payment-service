@@ -4,6 +4,7 @@ import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Account;
 import com.wefox.payment.data.entity.Payment;
+import com.wefox.payment.infrastructure.exception.PaymentDatabaseException;
 import com.wefox.payment.repository.contract.IPaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class OfflinePaymentTest {
   }
 
   @Test
-  void offlinePaymentStoredCorrectly_Test() {
+  void offlinePaymentStoredCorrectly_Test() throws PaymentDatabaseException {
     offlinePayment.storePayment(payment);
     IPaymentData persistedPaymentData = paymentRepository
             .findById("382b8005-da4e-4004-b064-5d920d47e14b")
@@ -60,7 +61,7 @@ class OfflinePaymentTest {
   }
 
   @Test
-  void accountLastPaymentDateUpdatedCorrectly_Test() {
+  void accountLastPaymentDateUpdatedCorrectly_Test() throws PaymentDatabaseException {
     IAccountData updatedAccount = offlinePayment.updateAccount(payment);
     assertEquals(currentDate, updatedAccount.getLastPaymentDate());
   }

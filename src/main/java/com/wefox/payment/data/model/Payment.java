@@ -36,8 +36,7 @@ public class Payment implements IPaymentData, IKafkaModel<Payment>, Serializable
   @JsonProperty(value = "amount", index = 4)
   private int amount;
 
-  @JsonIgnore
-  private Date createdOn;
+  @JsonIgnore private Date createdOn;
 
   @Override
   public IPaymentData mapFrom(IPaymentData paymentData) {
@@ -45,15 +44,14 @@ public class Payment implements IPaymentData, IKafkaModel<Payment>, Serializable
   }
 
   @Override
-  public Payment parse(String json) {
+  public Payment parse(String json) throws PaymentInternalException {
     try {
       ObjectMapper paymentMapper = new ObjectMapper();
       return paymentMapper.readValue(json, this.getClass());
     } catch (JsonProcessingException e) {
-      // TODO Add Exception for invalid data and send the error to the logger
-      e.printStackTrace();
+      throw new PaymentInternalException(
+          "Unable to parse json payment message to model due to: " + e.getMessage(), "N/A");
     }
-    return null;
   }
 
   public String toJsonString() throws PaymentInternalException {

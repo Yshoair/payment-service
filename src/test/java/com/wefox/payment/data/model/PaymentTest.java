@@ -25,7 +25,7 @@ class PaymentTest {
   }
 
   @Test
-  void parsePaymentFromJson_test() {
+  void parsePaymentFromJson_test() throws PaymentInternalException {
     String paymentJson =
         "{\"payment_id\": \"382b8005-da4e-4004-b064-5d920d47e14b\", \"account_id\": 496, " +
         "\"payment_type\": \"online\", \"credit_card\": \"4847171163467501036\", " +

@@ -3,6 +3,7 @@ package com.wefox.payment.service;
 import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Payment;
+import com.wefox.payment.infrastructure.exception.PaymentDatabaseException;
 import com.wefox.payment.infrastructure.exception.PaymentNetworkException;
 import com.wefox.payment.service.contract.IOnlinePayment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class OnlinePayment extends PaymentService implements IOnlinePayment {
 
   @Override
   @Transactional
-  public void processPayment(IPaymentData paymentData) throws PaymentNetworkException {
+  public void processPayment(IPaymentData paymentData) throws PaymentNetworkException, PaymentDatabaseException {
     this.validate(paymentData);
     IPaymentData payment = new Payment().mapFrom(paymentData);
     IPaymentData storedPayment = storePayment(payment);
