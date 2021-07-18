@@ -9,7 +9,7 @@
 
 2. run Spring boot main class com.wefox.payment.PaymentServiceApplication
 
-    a. Please note The project is developed in Java 11 to have a compatible JDK. 
+    a. Please note The project is developed in Java 11 so make sure you have a compatible JDK. 
 
 ### :memo: Notes
 
