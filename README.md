@@ -1,6 +1,5 @@
 ### :computer: How to execute
 
-_Provide a description of how to run/execute your program..._
 1. Start docker containers
    
     a. Through mvn -> mvn package -f pom.xml
@@ -14,15 +13,22 @@ _Provide a description of how to run/execute your program..._
 
 ### :memo: Notes
 
-_Some notes or explanation of your solution..._
-
 1. docker-compose.yml
    
    a. Added extra listener to kafka-server to allow connection from localhost clients 
    so please use the modified docker-compose.yml
+  
+ 
+2. pom.xml 
+   
+   a. added plugin to start containers by maven
+   
+   b. clean life cycle would run docker-compose down
+   
+   c. compile life cycle would run docker-compose up -d 
    
 
-2. Frameworks used
+3. Frameworks used
     
     a. Spring boot
     
@@ -35,7 +41,7 @@ _Some notes or explanation of your solution..._
     e. Lombok
 
 
-3. Programming paradigms applied
+4. Programming paradigms applied
     
     a. Test Driven Development
     
@@ -44,7 +50,7 @@ _Some notes or explanation of your solution..._
     c. Solid architecture
 
 
-4. Conventions
+5. Conventions
    
     a. Packages naming convention
 
@@ -68,7 +74,7 @@ _Some notes or explanation of your solution..._
     d. Git Commits -> conventional commits format 
 
 
-5. Project Structure
+6. Project Structure
 
    a. Layered structure
 
@@ -82,8 +88,6 @@ _Some notes or explanation of your solution..._
    b. Configurations: in application.properites file managed by ConfigurationManager class
 
 ### :pushpin: Things to improve
-
-_If u have more time or want to improve somthing..._
 
 1. Kafka consumer error handler for broker related issues and more customized kafka configurations
 2. Using kafka mockProducer to develop unit test code for the consumer
