@@ -14,12 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentClient {
+public class PaymentGateway {
   private final ConfigurationManager configurationManager;
   private final RestClientManager restClientManager;
 
   @Autowired
-  public PaymentClient(ConfigurationManager configurationManager, RestClientManager restClientManager) {
+  public PaymentGateway(ConfigurationManager configurationManager, RestClientManager restClientManager) {
     this.configurationManager = configurationManager;
     this.restClientManager = restClientManager;
   }

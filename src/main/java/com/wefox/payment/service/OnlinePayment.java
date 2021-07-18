@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OnlinePayment extends PaymentService implements IOnlinePayment {
 
   @Autowired
-  private PaymentClient paymentClient;
+  private PaymentGateway paymentGateway;
 
   @Override
   @Transactional
@@ -27,6 +27,6 @@ public class OnlinePayment extends PaymentService implements IOnlinePayment {
 
   @Override
   public void validate(IPaymentData paymentData) throws PaymentNetworkException {
-    paymentClient.verifyPayment(paymentData);
+    paymentGateway.verifyPayment(paymentData);
   }
 }

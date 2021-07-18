@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class PaymentClientTest {
+class PaymentGatewayTest {
   private IPaymentData payment;
   private String paymentUrl;
   private HttpHeaders headers;
@@ -50,7 +50,7 @@ class PaymentClientTest {
             payment,
             new ParameterizedTypeReference<Object>() {}
     )).thenReturn(new ResponseEntity<>(HttpStatus.OK));
-    PaymentClient paymentClient = new PaymentClient(configurationManager, restClientManager);
-    assertDoesNotThrow(() -> paymentClient.verifyPayment(payment));
+    PaymentGateway paymentGateway = new PaymentGateway(configurationManager, restClientManager);
+    assertDoesNotThrow(() -> paymentGateway.verifyPayment(payment));
   }
 }
