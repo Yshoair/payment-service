@@ -1,5 +1,6 @@
 package com.wefox.payment.service;
 
+import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Account;
 import com.wefox.payment.data.entity.Payment;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Service
-public class OfflinePayment implements IOfflinePayment {
+
+public @Service class OfflinePayment implements IOfflinePayment {
 
   @Autowired private IAccountRepository accountRepository;
   @Autowired private IPaymentRepository paymentRepository;
@@ -34,21 +35,22 @@ public class OfflinePayment implements IOfflinePayment {
       return storedPayment;
     } catch (Exception e) {
       // TODO throw custom exception
+      e.printStackTrace();
     } return null;
   }
 
   @Override
-  public void updateAccount(IPaymentData paymentData) {
-    Optional<Account> potentialAccount =
-        accountRepository.findById(paymentData.getAccountId());
+  public IAccountData updateAccount(IPaymentData paymentData) {
+    Optional<Account> potentialAccount = accountRepository.findById(paymentData.getAccountId());
     Account account;
     if (potentialAccount.isPresent()) {
       account = potentialAccount.get();
       account.setLastPaymentDate(paymentData.getCreatedOn());
-      accountRepository.save(account);
+      IAccountData updatedAccount = accountRepository.save(account);
       accountRepository.flush();
+      return updatedAccount;
     } else {
       // TODO throw custom exception
-    }
+    } return null;
   }
 }

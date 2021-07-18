@@ -1,5 +1,6 @@
 package com.wefox.payment.service;
 
+import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.service.contract.IOnlinePayment;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class OnlinePayment implements IOnlinePayment {
     }
 
     @Override
-    public void updateAccount(IPaymentData paymentData) {
-
+    public IAccountData updateAccount(IPaymentData paymentData) {
+        return null;
     }
 }

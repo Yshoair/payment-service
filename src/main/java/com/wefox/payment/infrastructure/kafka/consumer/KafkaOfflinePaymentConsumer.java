@@ -1,5 +1,9 @@
 package com.wefox.payment.infrastructure.kafka.consumer;
 
+import com.wefox.payment.data.contract.IKafkaModel;
+import com.wefox.payment.data.model.Payment;
+import com.wefox.payment.service.contract.IOfflinePayment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +13,16 @@ import org.springframework.stereotype.Component;
     groupId = "${wefox.kafka.consumer.group.payment.offline.id}")
 public class KafkaOfflinePaymentConsumer extends KafkaConsumer<String> {
 
+  private @Autowired IOfflinePayment offlinePayment;
+  private final IKafkaModel<Payment> payment = new Payment();
+
   @Override
-  protected void messageHandler() {}
+  protected void messageHandler() {
+    try {
+      offlinePayment.processPayment(payment.parse(this.deserializedMessageClass));
+    } catch (Exception e) {
+      //TODO Centralized Exception handler catches the exception and send the error message accordingly
+      e.printStackTrace();
+    }
+  }
 }

@@ -28,11 +28,13 @@ public @Table(name = "payments") class Payment implements IPaymentData {
   @Column(name = "amount")
   private int amount;
 
-  @Column(name = "created_on", columnDefinition = "Default now()")
+  @Column(name = "created_on")
   private Date createdOn;
 
   @Transient
   private int accountId;
+
+  public int getAccountId() { return account != null ? account.getAccountId() : 0; }
 
   @Override
   public IPaymentData mapFrom(IPaymentData paymentData) {
@@ -41,6 +43,7 @@ public @Table(name = "payments") class Payment implements IPaymentData {
     paymentType = paymentData.getPaymentType();
     creditCard = paymentData.getCreditCard();
     amount = paymentData.getAmount();
+    createdOn = paymentData.getCreatedOn() != null ? paymentData.getCreatedOn() : new Date();
     return this;
   }
 

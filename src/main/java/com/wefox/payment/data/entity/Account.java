@@ -27,7 +27,7 @@ public @Table(name = "accounts") class Account implements IAccountData {
   @Column(name = "last_payment_date")
   private Date lastPaymentDate;
 
-  @Column(name = "created_on", columnDefinition = "Default now()")
+  @Column(name = "created_on")
   private Date createdOn;
 
   @ToString.Exclude
