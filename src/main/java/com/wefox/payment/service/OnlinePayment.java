@@ -10,8 +10,12 @@ public class OnlinePayment extends PaymentService implements IOnlinePayment {
 
   @Override
   @Transactional
-  public void processPayment(IPaymentData paymentData) {}
+  public void processPayment(IPaymentData paymentData) {
+
+  }
 
   @Override
-  public void validate(IPaymentData paymentData) {}
+  public void validate(IPaymentData paymentData) {
+
+  }
 }

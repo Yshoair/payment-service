@@ -1,11 +1,14 @@
 package com.wefox.payment.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wefox.payment.data.contract.IKafkaModel;
 import com.wefox.payment.data.contract.IPaymentData;
+import com.wefox.payment.infrastructure.exception.PaymentInternalException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +20,12 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Payment implements IPaymentData, IKafkaModel<Payment> {
 
-  private @JsonProperty("payment_id") String paymentId;
-  private @JsonProperty("account_id") int accountId;
-  private @JsonProperty("payment_type") String paymentType;
-  private @JsonProperty("credit_card") String creditCard;
-  private @JsonProperty("amount") int amount;
-  private Date createdOn;
+  private @JsonProperty(value = "payment_id", index = 0) String paymentId;
+  private @JsonProperty(value = "account_id", index = 1) int accountId;
+  private @JsonProperty(value = "payment_type", index = 2) String paymentType;
+  private @JsonProperty(value = "credit_card", index = 3) String creditCard;
+  private @JsonProperty(value = "amount", index = 4) int amount;
+  private @JsonIgnore Date createdOn;
 
   @Override
   public IPaymentData mapFrom(IPaymentData paymentData) {
@@ -39,5 +42,15 @@ public class Payment implements IPaymentData, IKafkaModel<Payment> {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public String toJsonString() throws PaymentInternalException {
+    ObjectMapper paymentMapper = new ObjectMapper();
+    try {
+      return paymentMapper.writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      throw new PaymentInternalException("Failed to convert payment model to json string", paymentId);
+    }
   }
 }

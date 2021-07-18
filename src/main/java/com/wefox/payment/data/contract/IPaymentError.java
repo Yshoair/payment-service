@@ -1,6 +1,6 @@
 package com.wefox.payment.data.contract;
 
-public interface IError {
+public interface IPaymentError {
 
   String getPaymentId();
 
