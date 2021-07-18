@@ -17,7 +17,7 @@
     </description>
     <properties>
         <java.version>11</java.version>
-        <dependencies.dir>${project.basedir}/src/main/resources/dependencies</dependencies.dir>
+        <dependencies.dir>${project.basedir}/src/main/resources/dependency</dependencies.dir>
     </properties>
     <dependencies>
         <dependency>
@@ -91,13 +91,23 @@
                 <executions>
                     <execution>
                         <id>up</id>
-                        <phase>deploy</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>up</goal>
                         </goals>
                         <configuration>
                             <composeFile>${dependencies.dir}/docker-compose/docker-compose.yml</composeFile>
                             <detachedMode>true</detachedMode>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>down</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>down</goal>
+                        </goals>
+                        <configuration>
+                            <composeFile>${dependencies.dir}/docker-compose/docker-compose.yml</composeFile>
                         </configuration>
                     </execution>
                 </executions>
