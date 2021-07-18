@@ -24,28 +24,26 @@ public class PaymentClient {
     this.restClientManager = restClientManager;
   }
 
-  public IPaymentData verifyPayment(String paymentInfo) throws PaymentNetworkException {
-    IPaymentData paymentModel = new Payment().parse(paymentInfo);
+  public void verifyPayment(IPaymentData payment) throws PaymentNetworkException {
     String externalPaymentUrl = configurationManager.getExternalPaymentUrl();
     HttpHeaders headers = new HttpHeaders();
     headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-    ResponseEntity apiResponse;
+    ResponseEntity<?> apiResponse;
     try {
       apiResponse = restClientManager.executePost(
               externalPaymentUrl,
               headers,
-              paymentModel,
-              new ParameterizedTypeReference() {}
+              payment,
+              new ParameterizedTypeReference<Object>() {}
       );
     } catch (Exception e) {
       e.printStackTrace();
       throw new PaymentNetworkException(
           "Failed to call external payment api due to: " + e.getMessage(),
-          paymentModel.getPaymentId());
+              payment.getPaymentId());
     }
     int statusCode = apiResponse.getStatusCodeValue();
     if (statusCode != HttpStatus.OK.value())
-      throw new PaymentNetworkException("Invalid online payment", paymentModel.getPaymentId());
-    return paymentModel;
+      throw new PaymentNetworkException("Invalid online payment", payment.getPaymentId());
   }
 }

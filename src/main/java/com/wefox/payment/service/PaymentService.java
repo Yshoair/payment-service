@@ -3,6 +3,7 @@ package com.wefox.payment.service;
 import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Account;
+import com.wefox.payment.infrastructure.exception.PaymentNetworkException;
 import com.wefox.payment.repository.contract.IAccountRepository;
 import com.wefox.payment.repository.contract.IPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public abstract class PaymentService {
     @Autowired protected IAccountRepository accountRepository;
     @Autowired protected IPaymentRepository paymentRepository;
 
-    public abstract void processPayment(IPaymentData paymentData);
+    public abstract void processPayment(IPaymentData paymentData) throws PaymentNetworkException;
 
     public IPaymentData storePayment(IPaymentData paymentData) {
         try {

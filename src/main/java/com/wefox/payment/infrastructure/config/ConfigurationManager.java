@@ -21,10 +21,10 @@ public class ConfigurationManager {
   @Value("${wefox.kafka.consumer.group.payment.online.id}")
   private String kafkaOnlinePaymentGroupId;
 
-  @Value("wefox.external.payment.url")
+  @Value("${wefox.external.payment.url}")
   private String externalPaymentUrl;
 
-  @Value("wefox.system.log.url")
+  @Value("${wefox.system.log.url}")
   private String loggerUrl;
 
   @Bean
