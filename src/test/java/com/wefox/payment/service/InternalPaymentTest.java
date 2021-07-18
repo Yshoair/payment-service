@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OfflinePaymentTest {
+class InternalPaymentTest {
 
   private @Autowired PaymentService offlinePayment;
   private @Autowired IPaymentRepository paymentRepository;
