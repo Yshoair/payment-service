@@ -1,30 +1,32 @@
 package com.wefox.payment.infrastructure.kafka.consumer;
 
-import com.wefox.payment.infrastructure.exception.PaymentDatabaseException;
-import com.wefox.payment.infrastructure.exception.PaymentInternalException;
-import com.wefox.payment.infrastructure.exception.PaymentNetworkException;
-import com.wefox.payment.infrastructure.logger.LoggerClient;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 
+/**
+ * Generic consumer class to be extended by any consumer class created in the project
+ *
+ * @param <T> the type of kafka message object to be deserialized
+ */
 public abstract class KafkaConsumer<T> {
 
   protected ConsumerRecord<String, T> message;
   protected T deserializedMessageClass;
-  private @Autowired LoggerClient loggerClient;
 
+  /**
+   * Consumes the message from the topic and instantiates internal fields and calls the message
+   * handler
+   *
+   * @param message the kafka recorde consumed from the topic
+   * @param deserializedMessageClass the deserialized message consumed from the topic
+   */
   @KafkaHandler
   protected void consumeMessage(ConsumerRecord<String, T> message, T deserializedMessageClass) {
     this.message = message;
     this.deserializedMessageClass = deserializedMessageClass;
-    try {
-      messageHandler();
-    } catch (PaymentNetworkException | PaymentDatabaseException | PaymentInternalException e) {
-      loggerClient.logError(e.getPaymentError());
-    }
+    messageHandler();
   }
 
-  protected abstract void messageHandler()
-      throws PaymentNetworkException, PaymentDatabaseException, PaymentInternalException;
+  /** Extending consumer classes will provide their own handler implementation here */
+  protected abstract void messageHandler();
 }

@@ -6,13 +6,25 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
+/**
+ * Provides implementations for POST/GET/PUT/DELETE rest operations across the system
+ */
 @Service
 public class RestClientManager {
 
-  private @Autowired RestOperations restTemplate;
+  @Autowired
+  private RestOperations restTemplate;
 
-  // ---------------------------------- MAIN METHODS ----------------------------------
-
+  /**
+   * Base method used by all rest types
+   *
+   * @param method values POST/GET/PUT/DELETE
+   * @param url API url
+   * @param headers Request headers
+   * @param data  Request payload if exists
+   * @param parameterizedTypeReference Response Type Reference if exists
+   * @return Response entity of the type provided by the caller method
+   */
   private <T> ResponseEntity<?> executeRequest(HttpMethod method,
                                                String url,
                                                HttpHeaders headers,
@@ -22,7 +34,6 @@ public class RestClientManager {
     return restTemplate.exchange(url, method, requestEntity, parameterizedTypeReference);
   }
 
-  // ------------------------------------ POST ------------------------------------
 
   public <T> ResponseEntity<?> executePost(String url,
                                            HttpHeaders headers,
@@ -31,5 +42,4 @@ public class RestClientManager {
     return executeRequest(HttpMethod.POST, url, headers, data, parameterizedTypeReference);
   }
 
-  // ------------------------------------ POST ------------------------------------
 }

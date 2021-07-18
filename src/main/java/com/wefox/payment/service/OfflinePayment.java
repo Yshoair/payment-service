@@ -1,6 +1,5 @@
 package com.wefox.payment.service;
 
-import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Payment;
 import com.wefox.payment.infrastructure.exception.PaymentDatabaseException;
@@ -15,6 +14,6 @@ public class OfflinePayment extends PaymentService {
   public void processPayment(IPaymentData paymentData) throws PaymentDatabaseException {
     IPaymentData payment = new Payment().mapFrom(paymentData);
     IPaymentData storedPayment = storePayment(payment);
-    IAccountData updatedAccount = updateAccount(storedPayment);
+    updateAccount(storedPayment);
   }
 }

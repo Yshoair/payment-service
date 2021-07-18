@@ -11,17 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+/**
+ * Abstract payment Business service with store and update payments implementation
+ *
+ * Online and Offline payments extend this service each providing his payment processor
+ */
 public abstract class PaymentService {
+
   @Autowired protected IAccountRepository accountRepository;
   @Autowired protected IPaymentRepository paymentRepository;
 
-  public abstract void processPayment(IPaymentData paymentData)
-      throws PaymentNetworkException, PaymentDatabaseException;
+  public abstract void processPayment(IPaymentData paymentData) throws PaymentNetworkException,
+                                                                       PaymentDatabaseException;
 
+  /**
+   * Persists online/offline payments in the db
+   *
+   * @param paymentData data to be persisted
+   * @return returns the persisted payment
+   * @throws PaymentDatabaseException
+   */
   public IPaymentData storePayment(IPaymentData paymentData) throws PaymentDatabaseException {
     try {
-      IPaymentData storedPayment =
-          paymentRepository.save((com.wefox.payment.data.entity.Payment) paymentData);
+      IPaymentData storedPayment = paymentRepository.save((com.wefox.payment.data.entity.Payment) paymentData);
       paymentRepository.flush();
       return storedPayment;
     } catch (Exception e) {
@@ -30,6 +42,14 @@ public abstract class PaymentService {
           "Failed to persist payment due to: " + e.getMessage(), paymentData.getPaymentId());
     }
   }
+
+  /**
+   * Updated online/offline payments in the db
+   *
+   * @param paymentData data to be updated
+   * @return returns the updated payment
+   * @throws PaymentDatabaseException
+   */
 
   public IAccountData updateAccount(IPaymentData paymentData) throws PaymentDatabaseException {
     Optional<Account> potentialAccount = accountRepository.findById(paymentData.getAccountId());

@@ -9,7 +9,9 @@
 
 2. run Spring boot main class com.wefox.payment.PaymentServiceApplication
 
-    a. Please note The project is developed in Java 11 so make sure you have a compatible JDK. 
+    a. Please note The project is developed in Java 11 so make sure you have a compatible JDK.
+
+3. The entry point to the code would be src/main/java/com/wefox/payment/infrastructure/kafka/consumer/KafkaPaymentConsumer.java
 
 ### :memo: Notes
 

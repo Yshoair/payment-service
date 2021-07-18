@@ -13,8 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * The payment gateway business service which connects to third party payment endpoints and verifies
+ * the transaction
+ */
 @Service
 public class PaymentGateway {
+
   private final ConfigurationManager configurationManager;
   private final RestClientManager restClientManager;
 
@@ -24,6 +29,12 @@ public class PaymentGateway {
     this.restClientManager = restClientManager;
   }
 
+  /**
+   * Posts online payment to external gateway providing payment verification
+   *
+   * @param payment the payment model to be serialized and posted to the verifying endpoint
+   * @throws PaymentNetworkException represents connection errors and verification errors
+   */
   public void verifyPayment(IPaymentData payment) throws PaymentNetworkException {
     String externalPaymentUrl = configurationManager.getExternalPaymentUrl();
     HttpHeaders headers = new HttpHeaders();

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @KafkaListener(
     topics = "${wefox.kafka.consumer.topic.payment.offline.topic}",
     groupId = "${wefox.kafka.consumer.group.payment.offline.id}")
-public class KafkaOfflinePaymentConsumer extends KafkaConsumer<String> {
+public class KafkaOfflinePaymentConsumer extends KafkaPaymentConsumer {
 
   @Autowired
   @Qualifier("offlinePayment")
@@ -24,8 +24,9 @@ public class KafkaOfflinePaymentConsumer extends KafkaConsumer<String> {
   private final IKafkaModel<Payment> payment = new Payment();
 
   @Override
-  protected void messageHandler()
-      throws PaymentNetworkException, PaymentDatabaseException, PaymentInternalException {
+  protected void paymentHandler() throws PaymentNetworkException,
+                                         PaymentDatabaseException,
+                                         PaymentInternalException {
     offlinePayment.processPayment(payment.parse(this.deserializedMessageClass));
   }
 }

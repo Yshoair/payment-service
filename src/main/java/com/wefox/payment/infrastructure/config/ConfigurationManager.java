@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Manages system configurations
+ */
 @Configuration
 @PropertySource(value = "classpath:application.properties", ignoreResourceNotFound = true)
 @Getter

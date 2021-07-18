@@ -14,35 +14,40 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Kafka Abstract consumer configuration class
+ *
+ * @param <T> Class to be deserialized provided by the extending consumer class
+ */
 @EnableKafka
 @Configuration
 @Data
 public abstract class KafkaConsumerConfig<T> {
 
-    private final String groupId;
-    private final String bootstrapAddress;
-    private final Class<T> messageClass;
+  private final String groupId;
+  private final String bootstrapAddress;
+  private final Class<T> messageClass;
 
-    public KafkaConsumerConfig(String groupId, String bootstrapAddress, Class<T> messageClass) {
-        this.groupId = groupId;
-        this.bootstrapAddress = bootstrapAddress;
-        this.messageClass = messageClass;
-    }
+  public KafkaConsumerConfig(String groupId, String bootstrapAddress, Class<T> messageClass) {
+    this.groupId = groupId;
+    this.bootstrapAddress = bootstrapAddress;
+    this.messageClass = messageClass;
+  }
 
-    protected ConsumerFactory<String, T> consumerFactory() {
-        JsonDeserializer<T> messageDeserializer = new JsonDeserializer<>(messageClass);
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, messageDeserializer);
-        return new DefaultKafkaConsumerFactory<>(props);
-    }
+  protected ConsumerFactory<String, T> consumerFactory() {
+    JsonDeserializer<T> messageDeserializer = new JsonDeserializer<>(messageClass);
+    Map<String, Object> props = new HashMap<>();
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, messageDeserializer);
+    return new DefaultKafkaConsumerFactory<>(props);
+  }
 
-    protected ConcurrentKafkaListenerContainerFactory<String, T> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, T> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        return factory;
-    }
+  protected ConcurrentKafkaListenerContainerFactory<String, T> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, T> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactory());
+    return factory;
+  }
 }
