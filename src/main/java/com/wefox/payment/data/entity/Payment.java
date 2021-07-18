@@ -53,9 +53,8 @@ public @Table(name = "payments") class Payment implements IPaymentData {
     if (o == null || getClass() != o.getClass()) return false;
     Payment payment = (Payment) o;
     return amount == payment.amount
-        && accountId == payment.accountId
         && Objects.equals(paymentId, payment.paymentId)
-        && Objects.equals(account, payment.account)
+        && Objects.equals(account.getAccountId(), payment.account.getAccountId())
         && Objects.equals(paymentType, payment.paymentType)
         && Objects.equals(creditCard, payment.creditCard)
         && Objects.equals(createdOn, payment.createdOn);
