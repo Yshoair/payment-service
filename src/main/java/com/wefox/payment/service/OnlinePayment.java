@@ -1,30 +1,17 @@
 package com.wefox.payment.service;
 
-import com.wefox.payment.data.contract.IAccountData;
 import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.service.contract.IOnlinePayment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class OnlinePayment implements IOnlinePayment {
+@Service("onlinePayment")
+public class OnlinePayment extends PaymentService implements IOnlinePayment {
 
-    @Override
-    public void processPayment(IPaymentData paymentData) {
+  @Override
+  @Transactional
+  public void processPayment(IPaymentData paymentData) {}
 
-    }
-
-    @Override
-    public void validate(IPaymentData paymentData) {
-
-    }
-
-    @Override
-    public IPaymentData storePayment(IPaymentData paymentData) {
-        return null;
-    }
-
-    @Override
-    public IAccountData updateAccount(IPaymentData paymentData) {
-        return null;
-    }
+  @Override
+  public void validate(IPaymentData paymentData) {}
 }

@@ -1,4 +1,4 @@
-package com.wefox.payment.data.Enum;
+package com.wefox.payment.data.enums;
 
 import lombok.Getter;
 

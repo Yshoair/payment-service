@@ -5,7 +5,6 @@ import com.wefox.payment.data.contract.IPaymentData;
 import com.wefox.payment.data.entity.Account;
 import com.wefox.payment.data.entity.Payment;
 import com.wefox.payment.repository.contract.IPaymentRepository;
-import com.wefox.payment.service.contract.IOfflinePayment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,15 +24,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class OfflinePaymentTest {
 
-  @Autowired private IOfflinePayment offlinePayment;
-  @Autowired private IPaymentRepository paymentRepository;
+  private @Autowired PaymentService offlinePayment;
+  private @Autowired IPaymentRepository paymentRepository;
   private IPaymentData payment;
   private Date currentDate;
 
   @TestConfiguration
   static class OfflinePaymentServiceImplTestContextConfiguration {
     @Bean
-    public IOfflinePayment offlinePayment() {
+    public PaymentService offlinePayment() {
       return new OfflinePayment();
     }
   }

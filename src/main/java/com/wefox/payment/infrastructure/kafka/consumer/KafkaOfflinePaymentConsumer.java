@@ -2,8 +2,9 @@ package com.wefox.payment.infrastructure.kafka.consumer;
 
 import com.wefox.payment.data.contract.IKafkaModel;
 import com.wefox.payment.data.model.Payment;
-import com.wefox.payment.service.contract.IOfflinePayment;
+import com.wefox.payment.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Component;
     groupId = "${wefox.kafka.consumer.group.payment.offline.id}")
 public class KafkaOfflinePaymentConsumer extends KafkaConsumer<String> {
 
-  private @Autowired IOfflinePayment offlinePayment;
+  @Autowired
+  @Qualifier("offlinePayment")
+  private PaymentService offlinePayment;
   private final IKafkaModel<Payment> payment = new Payment();
 
   @Override
