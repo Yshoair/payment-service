@@ -3,8 +3,9 @@ package com.wefox.payment.infrastructure.exception;
 import com.wefox.payment.data.contract.IPaymentError;
 import com.wefox.payment.data.enums.PaymentErrorTypes;
 import com.wefox.payment.data.model.PaymentError;
+import com.wefox.payment.infrastructure.exception.contract.PaymentException;
 
-public class PaymentNetworkException extends Exception {
+public class PaymentNetworkException extends Exception implements PaymentException {
 
     private final IPaymentError paymentError;
     private final PaymentErrorTypes NETWORK = PaymentErrorTypes.NETWORK;
